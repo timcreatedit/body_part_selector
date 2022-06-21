@@ -23,16 +23,19 @@ class BodyPartSelectorTurnable extends StatelessWidget {
     return RotationStage(
       contentBuilder: (index, side, page) => Padding(
         padding: padding,
-        child: BodyPartSelector(
-          side: side.map(
-            front: BodySide.front,
-            left: BodySide.left,
-            back: BodySide.back,
-            right: BodySide.right,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: BodyPartSelector(
+            side: side.map(
+              front: BodySide.front,
+              left: BodySide.left,
+              back: BodySide.back,
+              right: BodySide.right,
+            ),
+            bodyParts: bodyParts,
+            onSelectionUpdated: onSelectionUpdated,
+            mirrored: mirrored,
           ),
-          bodyParts: bodyParts,
-          onSelectionUpdated: onSelectionUpdated,
-          mirrored: mirrored,
         ),
       ),
     );

@@ -2,23 +2,10 @@ import 'dart:math';
 
 import 'package:body_part_selector/src/model/body_parts.dart';
 import 'package:body_part_selector/src/model/body_side.dart';
+import 'package:body_part_selector/src/service/svg_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:touchable/touchable.dart';
-
-final bodySvgProvider = FutureProvider.family<DrawableRoot, BodySide>(
-  (ref, side) async {
-    final svgBytes = await rootBundle.load(side.map(
-      front: "lib/assets/m_front.svg",
-      left: "lib/assets/m_left.svg",
-      back: "lib/assets/m_back.svg",
-      right: "lib/assets/m_right.svg",
-    ));
-    return svg.fromSvgBytes(svgBytes.buffer.asUint8List(), "svg");
-  },
-);
 
 class BodyPartSelector extends StatelessWidget {
   const BodyPartSelector({
@@ -46,41 +33,47 @@ class BodyPartSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: Consumer(builder: (context, ref, _) {
-        final asyncValue = ref.watch(bodySvgProvider(side));
-        final colorScheme = Theme.of(context).colorScheme;
-        return asyncValue.maybeMap(
-          data: (value) => CanvasTouchDetector(
-            gesturesToOverride: const [GestureType.onTapDown],
-            builder: (context) => CustomPaint(
-              painter: _BodyPainter(
-                root: value.value,
-                bodyParts: bodyParts,
-                onTap: (s) => onSelectionUpdated?.call(
-                  bodyParts.withToggledId(
-                    s,
-                    mirror: mirrored,
-                  ),
-                ),
-                context: context,
-                selectedColor: selectedColor ?? colorScheme.primary,
-                unselectedColor: unselectedColor ?? colorScheme.inverseSurface,
-                unselectedOutlineColor:
-                    unselectedOutlineColor ?? colorScheme.onInverseSurface,
-                selectedOutlineColor:
-                    selectedOutlineColor ?? colorScheme.onPrimary,
+    final notifier = SvgService.instance.getSide(side);
+    return ValueListenableBuilder<DrawableRoot?>(
+        valueListenable: notifier,
+        builder: (context, value, _) {
+          if (value == null) {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          } else {
+            return _buildBody(context, value);
+          }
+        });
+  }
+
+  Widget _buildBody(BuildContext context, DrawableRoot drawable) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return AnimatedSwitcher(
+      duration: kThemeAnimationDuration,
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeOutCubic,
+      child: SizedBox.expand(
+        key: ValueKey(bodyParts),
+        child: CanvasTouchDetector(
+          gesturesToOverride: const [GestureType.onTapDown],
+          builder: (context) => CustomPaint(
+            painter: _BodyPainter(
+              root: drawable,
+              bodyParts: bodyParts,
+              onTap: (s) => onSelectionUpdated?.call(
+                bodyParts.withToggledId(s, mirror: mirrored),
               ),
+              context: context,
+              selectedColor: selectedColor ?? colorScheme.inversePrimary,
+              unselectedColor: unselectedColor ?? colorScheme.inverseSurface,
+              selectedOutlineColor: selectedOutlineColor ?? colorScheme.primary,
+              unselectedOutlineColor:
+                  unselectedOutlineColor ?? colorScheme.onInverseSurface,
             ),
           ),
-          error: (e) => ErrorWidget(
-            e.error,
-          ),
-          orElse: () => const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

@@ -31,4 +31,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - lib/assets/images
+    - packages/body_part_selector/m_front.svg
+    - packages/body_part_selector/m_left.svg
+    - packages/body_part_selector/m_back.svg
+    - packages/body_part_selector/m_right.svg
