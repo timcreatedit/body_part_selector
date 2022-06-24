@@ -15,7 +15,7 @@ dependencies:
   flutter_svg: ^1.1.0
   touchable: ^1.0.2
   freezed_annotation: ^2.0.3
-  rotation_stage: ^0.0.1
+  rotation_stage: ^0.0.3
 
 dev_dependencies:
   flutter_test:
