@@ -2,8 +2,8 @@ name: body_part_selector
 description: A beautiful selector for different body parts
 version: 0.0.2
 homepage: https://www.fyzo.de
-repository: https://github.com/fyzio/body_part_selector
-issue_tracker: https://github.com/fyzio/body_part_selector
+repository: https://github.com/fyzo-dev/body_part_selector
+issue_tracker: https://github.com/fyzo-dev/body_part_selector
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
