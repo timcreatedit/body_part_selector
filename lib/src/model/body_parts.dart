@@ -69,21 +69,34 @@ class BodyParts with _$BodyParts {
   /// If [id] doesn't represent a valid BodyPart, this returns an unchanged
   /// Object. If [mirror] is true, and the BodyPart is one that exists on both
   /// sides (e.g. Knee), the other side is toggled as well.
-  BodyParts withToggledId(String id, {bool mirror = false}) {
+  BodyParts withToggledId(String id,
+      {bool mirror = false, bool singleSelection = false}) {
     final map = toJson();
-    if (!map.containsKey(id)) return this;
-    map[id] = !map[id];
-    if (mirror) {
-      if (id.contains("left")) {
-        final mirroredId =
-            id.replaceAll("left", "right").replaceAll("Left", "Right");
-        map[mirroredId] = map[id];
-      } else if (id.contains("right")) {
-        final mirroredId =
-            id.replaceAll("right", "left").replaceAll("Right", "Left");
-        map[mirroredId] = map[id];
+
+    if (singleSelection) {
+      if (map[id] == true) {
+        Set<String> allKeys = map.keys.toSet();
+        allKeys.forEach((key) {
+          map[key] = true;
+        });
+        map[id] = !map[id];
+      }
+    } else {
+      if (!map.containsKey(id)) return this;
+      map[id] = !map[id];
+      if (mirror) {
+        if (id.contains("left")) {
+          final mirroredId =
+              id.replaceAll("left", "right").replaceAll("Left", "Right");
+          map[mirroredId] = map[id];
+        } else if (id.contains("right")) {
+          final mirroredId =
+              id.replaceAll("right", "left").replaceAll("Right", "Left");
+          map[mirroredId] = map[id];
+        }
       }
     }
+
     return BodyParts.fromJson(map);
   }
 }
