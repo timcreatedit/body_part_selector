@@ -24,3 +24,10 @@ dev_dependencies:
   lintervention: ^0.1.1
   melos: ^6.0.0
   mocktail: ^1.0.3
+
+flutter:
+  assets:
+    - packages/body_part_selector/m_front.svg
+    - packages/body_part_selector/m_left.svg
+    - packages/body_part_selector/m_back.svg
+    - packages/body_part_selector/m_right.svg
