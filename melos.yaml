@@ -2,7 +2,7 @@ name: body_part_selector_workspace
 
 packages:
   - .
-  - ./example
+  - "**example/"
   - packages/*
 
 command:
