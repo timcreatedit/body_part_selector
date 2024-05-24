@@ -37,7 +37,6 @@ class RotationStage extends StatefulWidget {
     required this.contentBuilder,
     this.controller,
     this.viewHandleBuilder,
-    this.labels,
     this.barHeight = 64,
     this.barInteractable = true,
     super.key,
@@ -54,9 +53,6 @@ class RotationStage extends StatefulWidget {
 
   /// The builder function for the handles of the [RotationStage].
   final RotationStageBuilder? viewHandleBuilder;
-
-  /// The labels for the sides of the [RotationStage].
-  final RotationStageLabelData? labels;
 
   /// The height of the bottom bar in logical pixels.
   final double barHeight;
@@ -79,34 +75,31 @@ class _RotationStageState extends State<RotationStage> {
 
   @override
   Widget build(BuildContext context) {
-    return RotationStageLabels(
-      data: widget.labels ?? RotationStageLabelData.english,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: RotationStageContent(
-              controller: _controller,
-              contentBuilder: widget.contentBuilder,
-            ),
-          ),
-          const Divider(
-            height: 1,
-          ),
-          RotationStageBar(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          child: RotationStageContent(
             controller: _controller,
-            interactable: widget.barInteractable,
-            viewHandleBuilder: widget.viewHandleBuilder ??
-                (index, side, page) => RotationStageHandle(
-                      onTap: () => _controller.animateToPage(index),
-                      side: side,
-                      active: index == page.round(),
-                      backgroundTransparent: !widget.barInteractable,
-                    ),
+            contentBuilder: widget.contentBuilder,
           ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: 1,
+        ),
+        RotationStageBar(
+          controller: _controller,
+          interactable: widget.barInteractable,
+          viewHandleBuilder: widget.viewHandleBuilder ??
+              (index, side, page) => RotationStageHandle(
+                    onTap: () => _controller.animateToPage(index),
+                    side: side,
+                    active: index == page.round(),
+                    backgroundTransparent: !widget.barInteractable,
+                  ),
+        ),
+      ],
     );
   }
 }
