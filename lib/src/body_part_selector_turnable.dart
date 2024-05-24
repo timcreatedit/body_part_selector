@@ -25,6 +25,7 @@ class BodyPartSelectorTurnable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RotationStage(
+      viewHandleBuilder: (index, side, currentPage) => ,
       contentBuilder: (index, side, page) => Padding(
         padding: padding,
         child: Padding(
