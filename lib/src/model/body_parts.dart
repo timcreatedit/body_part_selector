@@ -74,7 +74,7 @@ class BodyParts with _$BodyParts {
   /// Object. If [mirror] is true, and the BodyPart is one that exists on both
   /// sides (e.g. Knee), the other side is toggled as well.
   BodyParts withToggledId(String id, {bool mirror = false}) {
-    final map = toJson();
+    final map = toMap();
     if (!map.containsKey(id)) return this;
     map[id] = !(map[id] ?? false);
     if (mirror) {
@@ -91,8 +91,11 @@ class BodyParts with _$BodyParts {
     return BodyParts.fromJson(map);
   }
 
-  @override
-  Map<String, bool> toJson() {
-    return super.toJson().cast();
+  /// Returns a Map representation of this object.
+  ///
+  /// Similar to [toJson], but returns a Map<String, bool> instead of a
+  /// Map<String, dynamic>.
+  Map<String, bool> toMap() {
+    return toJson().cast();
   }
 }

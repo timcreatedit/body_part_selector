@@ -142,7 +142,7 @@ class _BodyPainter extends CustomPainter {
   final Color selectedOutlineColor;
 
   bool isSelected(String key) {
-    final selections = bodyParts.toJson();
+    final selections = bodyParts.toMap();
     if (selections.containsKey(key) && selections[key]!) {
       return true;
     }
