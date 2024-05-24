@@ -17,15 +17,18 @@ class BodyPartSelectorTurnable extends StatelessWidget {
   });
 
   final BodyParts bodyParts;
-  final Function(BodyParts)? onSelectionUpdated;
+
+  final ValueChanged<BodyParts>? onSelectionUpdated;
+
   final bool mirrored;
+
   final EdgeInsets padding;
+
   final RotationStageLabelData? labelData;
 
   @override
   Widget build(BuildContext context) {
     return RotationStage(
-      viewHandleBuilder: (index, side, currentPage) => ,
       contentBuilder: (index, side, page) => Padding(
         padding: padding,
         child: Padding(

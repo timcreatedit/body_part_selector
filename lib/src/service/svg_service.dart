@@ -33,7 +33,9 @@ class SvgService {
   }
 
   Future<void> _loadDrawable(
-      BodySide side, ValueNotifier<Drawable?> notifier) async {
+    BodySide side,
+    ValueNotifier<Drawable?> notifier,
+  ) async {
     final svgBytes = await rootBundle.load(
       side.map(
         front: "packages/body_part_selector/m_front.svg",

@@ -5,8 +5,6 @@ part 'body_parts.g.dart';
 
 @freezed
 class BodyParts with _$BodyParts {
-  const BodyParts._();
-
   const factory BodyParts({
     @Default(false) bool head,
     @Default(false) bool neck,
@@ -33,6 +31,10 @@ class BodyParts with _$BodyParts {
     @Default(false) bool abdomen,
     @Default(false) bool vestibular,
   }) = _BodyParts;
+
+  factory BodyParts.fromJson(Map<String, dynamic> json) =>
+      _$BodyPartsFromJson(json);
+  const BodyParts._();
 
   static const all = BodyParts(
     head: true,
@@ -61,9 +63,6 @@ class BodyParts with _$BodyParts {
     vestibular: true,
   );
 
-  factory BodyParts.fromJson(Map<String, dynamic> json) =>
-      _$BodyPartsFromJson(json);
-
   /// Toggles the BodyPart with the given [id].
   ///
   /// If [id] doesn't represent a valid BodyPart, this returns an unchanged
@@ -72,18 +71,23 @@ class BodyParts with _$BodyParts {
   BodyParts withToggledId(String id, {bool mirror = false}) {
     final map = toJson();
     if (!map.containsKey(id)) return this;
-    map[id] = !map[id];
+    map[id] = !(map[id] ?? false);
     if (mirror) {
       if (id.contains("left")) {
         final mirroredId =
             id.replaceAll("left", "right").replaceAll("Left", "Right");
-        map[mirroredId] = map[id];
+        map[mirroredId] = map[id] ?? false;
       } else if (id.contains("right")) {
         final mirroredId =
             id.replaceAll("right", "left").replaceAll("Right", "Left");
-        map[mirroredId] = map[id];
+        map[mirroredId] = map[id] ?? false;
       }
     }
     return BodyParts.fromJson(map);
+  }
+
+  @override
+  Map<String, bool> toJson() {
+    return super.toJson().cast();
   }
 }

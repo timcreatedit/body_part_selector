@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+.mason/
 migrate_working_dir/
 
 # IntelliJ related
@@ -16,15 +17,11 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# See https://www.dartlang.org/guides/libraries/private-files
 
-# Flutter/Dart/Pub related
-# Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
-/pubspec.lock
-**/doc/api/
+# Files and directories created by pub
 .dart_tool/
 .packages
 build/
+pubspec.lock
+pubspec_overrides.yaml

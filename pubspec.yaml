@@ -1,38 +1,26 @@
 name: body_part_selector
 description: A beautiful selector for different body parts
 version: 0.0.3
-homepage: https://www.fyzo.de
-repository: https://github.com/fyzio/body_part_selector
-issue_tracker: https://github.com/fyzio/body_part_selector
+homepage: https://www.whynotmake.it
+repository: https://github.com/timcreatedit/body_part_selector
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^1.1.0
+  flutter_svg: ^1.1.6
+  freezed_annotation: ^2.4.1
+  rotation_stage: ^0.1.0
   touchable: ^1.0.2
-  freezed_annotation: ^2.0.3
-  rotation_stage: ^0.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
-  build_runner: ^2.1.11
-  freezed: ^2.0.3+1
-  json_serializable: ^6.2.0
-
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
-flutter:
-  assets:
-    - packages/body_part_selector/m_front.svg
-    - packages/body_part_selector/m_left.svg
-    - packages/body_part_selector/m_back.svg
-    - packages/body_part_selector/m_right.svg
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  lintervention: ^0.1.1
+  melos: ^6.0.0
+  mocktail: ^1.0.3
