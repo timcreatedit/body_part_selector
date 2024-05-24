@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// A singleton service that loads the SVGs for the body sides.
 class SvgService {
   SvgService._() {
     _init();
@@ -12,6 +13,7 @@ class SvgService {
 
   static final SvgService _instance = SvgService._();
 
+  /// The singleton instance of [SvgService].
   static SvgService get instance => _instance;
 
   final ValueNotifier<DrawableRoot?> _front = ValueNotifier(null);
@@ -19,6 +21,9 @@ class SvgService {
   final ValueNotifier<DrawableRoot?> _back = ValueNotifier(null);
   final ValueNotifier<DrawableRoot?> _right = ValueNotifier(null);
 
+  /// The [ValueNotifier] for the given [side].
+  ///
+  /// It's value is null until the SVG is loaded.
   ValueNotifier<DrawableRoot?> getSide(BodySide side) => side.map(
         front: _front,
         left: _left,

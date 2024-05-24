@@ -7,44 +7,85 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable/touchable.dart';
 
+/// A widget that allows for selecting body parts.
 class BodyPartSelector extends StatelessWidget {
+  /// Creates a [BodyPartSelector].
   const BodyPartSelector({
-    super.key,
-    required this.side,
     required this.bodyParts,
     required this.onSelectionUpdated,
+    required this.side,
     this.mirrored = false,
     this.selectedColor,
     this.unselectedColor,
     this.selectedOutlineColor,
     this.unselectedOutlineColor,
+    super.key,
   });
 
-  final BodySide side;
+  /// {@template body_part_selector.body_parts}
+  /// The current selection of body parts
+  /// {@endtemplate}
   final BodyParts bodyParts;
+
+  /// The side of the body to display.
+  final BodySide side;
+
+  /// {@template body_part_selector.on_selection_updated}
+  /// Called when the selection of body parts is updated with the new selection.
+  /// {@endtemplate}
   final void Function(BodyParts bodyParts)? onSelectionUpdated;
 
+  /// {@template body_part_selector.mirrored}
+  /// Whether the selection should be mirrored, or symmetric, such that when
+  /// selecting the left arm for example, the right arm is selected as well.
+  ///
+  /// Defaults to false.
+  /// {@endtemplate}
   final bool mirrored;
 
+  /// {@template body_part_selector.selected_color}
+  /// The color of the selected body parts.
+  ///
+  /// Defaults to [ThemeData.colorScheme.inversePrimary].
+  /// {@endtemplate}
   final Color? selectedColor;
+
+  /// {@template body_part_selector.unselected_color}
+  /// The color of the unselected body parts.
+  ///
+  /// Defaults to [ThemeData.colorScheme.inverseSurface].
+  /// {@endtemplate}
   final Color? unselectedColor;
+
+  /// {@template body_part_selector.selected_outline_color}
+  /// The color of the outline of the selected body parts.
+  ///
+  /// Defaults to [ThemeData.colorScheme.primary].
+  /// {@endtemplate}
   final Color? selectedOutlineColor;
+
+  /// {@template body_part_selector.unselected_outline_color}
+  /// The color of the outline of the unselected body parts.
+  ///
+  /// Defaults to [ThemeData.colorScheme.onInverseSurface].
+  /// {@endtemplate}
   final Color? unselectedOutlineColor;
 
   @override
   Widget build(BuildContext context) {
     final notifier = SvgService.instance.getSide(side);
     return ValueListenableBuilder<DrawableRoot?>(
-        valueListenable: notifier,
-        builder: (context, value, _) {
-          if (value == null) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          } else {
-            return _buildBody(context, value);
-          }
-        });
+      valueListenable: notifier,
+      builder: (context, value, _) {
+        if (value == null) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        } else {
+          return _buildBody(context, value);
+        }
+      },
+    );
   }
 
   Widget _buildBody(BuildContext context, DrawableRoot drawable) {
@@ -146,17 +187,17 @@ class _BodyPainter extends CustomPainter {
         size.width / root.viewport.viewBoxRect.width,
         size.height / root.viewport.viewBoxRect.height,
       );
-      final Size scaledHalfViewBoxSize =
+      final scaledHalfViewBoxSize =
           root.viewport.viewBoxRect.size * scale / 2.0;
-      final Size halfDesiredSize = size / 2.0;
-      final Offset shift = Offset(
+      final halfDesiredSize = size / 2.0;
+      final shift = Offset(
         halfDesiredSize.width - scaledHalfViewBoxSize.width,
         halfDesiredSize.height - scaledHalfViewBoxSize.height,
       );
 
       final bodyPartsCanvas = TouchyCanvas(context, canvas);
 
-      final Matrix4 fittingMatrix = Matrix4.identity()
+      final fittingMatrix = Matrix4.identity()
         ..translate(shift.dx, shift.dy)
         ..scale(scale);
 

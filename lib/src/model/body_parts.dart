@@ -3,8 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'body_parts.freezed.dart';
 part 'body_parts.g.dart';
 
+/// A class representing the different parts of the body that can be selected,
+/// and whether they are.
 @freezed
 class BodyParts with _$BodyParts {
+  /// Creates a new [BodyParts] object.
   const factory BodyParts({
     @Default(false) bool head,
     @Default(false) bool neck,
@@ -32,10 +35,12 @@ class BodyParts with _$BodyParts {
     @Default(false) bool vestibular,
   }) = _BodyParts;
 
+  /// Creates a new [BodyParts] object from a JSON object.
   factory BodyParts.fromJson(Map<String, dynamic> json) =>
       _$BodyPartsFromJson(json);
   const BodyParts._();
 
+  /// A constant representing a selection with all [BodyParts] selected.
   static const all = BodyParts(
     head: true,
     neck: true,
