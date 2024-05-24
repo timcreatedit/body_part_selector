@@ -1,6 +1,6 @@
 name: rotation_stage
 description: A four-sided stage for representing 3D objects with four widgets
-version: 0.1.0
+version: 0.2.0
 
 
 environment:

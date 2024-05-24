@@ -1,3 +1,10 @@
+## 0.2.0
+
+> Note: This release has breaking changes.
+
+ - **DOCS**(rotation_stage): documented all public classes.
+ - **BREAKING** **FIX**: removed `labels` parameter in `RotationStage`.
+
 ## 0.1.0
 * Adjusted chips for Flutter 3.3
 

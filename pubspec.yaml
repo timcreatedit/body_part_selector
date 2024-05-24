@@ -1,6 +1,6 @@
 name: body_part_selector
 description: A beautiful selector for different body parts
-version: 0.0.3
+version: 0.1.0
 homepage: https://www.whynotmake.it
 repository: https://github.com/timcreatedit/body_part_selector
 
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_svg: ">=1.1.0 <2.0.0" # https://github.com/dnfield/flutter_svg/issues/969
   freezed_annotation: ">=2.4.0 <3.0.0" 
-  rotation_stage: ^0.1.0
+  rotation_stage: ^0.2.0
   touchable: ^1.0.2
 
 dev_dependencies:
