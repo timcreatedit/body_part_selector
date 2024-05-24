@@ -13,10 +13,10 @@ environment:
 
 
 dependencies:
-  body_part_selector:
-    path: ../
   flutter:
     sdk: flutter
+  rotation_stage:
+    path: ../
 
 dev_dependencies:
   flutter_test:
