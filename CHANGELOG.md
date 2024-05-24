@@ -1,3 +1,9 @@
-## 0.1.0
+## 0.0.3
+* bump rotation_stage version
+* allow for custom labels
 
-- feat: initial commit 🎉
+## 0.0.2
+* added demo GIF to README
+
+## 0.0.1
+* Initial Release
