@@ -1,6 +1,6 @@
 name: rotation_stage
 description: A four-sided stage for representing 3D objects with four widgets
-version: 0.2.0
+version: 0.3.0
 homepage: https://www.whynotmake.it
 repository: https://github.com/timcreatedit/body_part_selector/tree/main/packages/rotation_stage
 
