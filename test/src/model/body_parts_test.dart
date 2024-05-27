@@ -106,22 +106,22 @@ void main() {
           expect(
             bp.withToggledId(leftId).toJson()[rightId],
             false,
-            reason: "Toggling $leftId on, should leave off $rightId",
+            reason: "$leftId on, should leave off $rightId",
           );
           expect(
             bp.withToggledId(leftId, mirror: true).toJson()[rightId],
             true,
-            reason: "Toggling $leftId on mirrored, should turn on $rightId",
+            reason: "$leftId on mirrored, should turn on $rightId",
           );
           expect(
             bp.withToggledId(rightId).toJson()[leftId],
             false,
-            reason: "Toggling $rightId on, should leave off $leftId",
+            reason: "$rightId on, should leave off $leftId",
           );
           expect(
             bp.withToggledId(rightId, mirror: true).toJson()[leftId],
             true,
-            reason: "Toggling $rightId on mirrored, should turn on $leftId",
+            reason: "$rightId on mirrored, should turn on $leftId",
           );
           expect(
             bp
@@ -129,8 +129,7 @@ void main() {
                 .withToggledId(rightId, mirror: true)
                 .toJson()[leftId],
             false,
-            reason:
-                "Toggling $rightId on and off mirrored, should leave off $leftId",
+            reason: "$rightId on and off mirrored, should leave off $leftId",
           );
           expect(
             bp
@@ -138,8 +137,7 @@ void main() {
                 .withToggledId(leftId, mirror: true)
                 .toJson()[rightId],
             false,
-            reason:
-                "Toggling $leftId on and off mirrored, should leave off $rightId",
+            reason: "$leftId on and off mirrored, should leave off $rightId",
           );
           expect(
             bp
@@ -148,7 +146,7 @@ void main() {
                 .toJson()[rightId],
             true,
             reason:
-                "Toggling $leftId on, then $rightId on mirrored should turn on $rightId",
+                "$leftId on, then $rightId on mirrored should turn on $rightId",
           );
           expect(
             bp
@@ -156,8 +154,8 @@ void main() {
                 .withToggledId(leftId, mirror: true)
                 .toJson()[rightId],
             false,
-            reason:
-                "Toggling $leftId on, then $leftId off mirrored, should leave off $rightId",
+            reason: "$leftId on, then $leftId off mirrored, should leave off "
+                "$rightId",
           );
           expect(
             bp
@@ -166,8 +164,8 @@ void main() {
                 .withToggledId(leftId, mirror: true)
                 .toJson()[rightId],
             false,
-            reason:
-                "Toggling $rightId, then $leftId on, then $leftId mirrored off should turn off $rightId",
+            reason: "$rightId, then $leftId on, then $leftId mirrored off "
+                "should turn off $rightId",
           );
         }
 
