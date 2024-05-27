@@ -23,15 +23,29 @@ class RotationStageController extends ValueNotifier<double> {
           viewportFraction: viewportFraction,
         ),
         super(kInfiniteScrollStartPage.toDouble()) {
+    _addPageControllerListener();
+  }
+
+  /// Creates a [RotationStageController] with a custom [PageController].
+  ///
+  /// This constructor is intended for testing purposes only.
+  @visibleForTesting
+  RotationStageController.customPageController(this.pageController)
+      : super(kInfiniteScrollStartPage.toDouble()) {
+    _addPageControllerListener();
+    pageController.jumpTo(kInfiniteScrollStartPage.toDouble());
+  }
+
+  /// The [PageController] instance backing this controller.
+  final PageController pageController;
+
+  void _addPageControllerListener() {
     pageController.addListener(() {
       if (pageController.positions.isNotEmpty && pageController.page != null) {
         value = pageController.page!;
       }
     });
   }
-
-  /// The [PageController] instance backing this controller.
-  final PageController pageController;
 
   /// Animates the [RotationStage] to the given page.
   void animateToPage(
@@ -41,6 +55,26 @@ class RotationStageController extends ValueNotifier<double> {
   }) {
     pageController.animateToPage(
       page,
+      duration: duration,
+      curve: curve,
+    );
+  }
+
+  /// Animates the [RotationStage] to the closest page that corresponds to the
+  /// given [side].
+  void animateToSide(
+    RotationStageSide side, {
+    Duration duration = kThemeAnimationDuration,
+    Curve curve = Curves.ease,
+  }) {
+    final currentIndex = (value % RotationStageSide.values.length).round();
+    final targetIndex = side.index;
+    final difference = targetIndex - currentIndex;
+    final shortestWay = difference > 2 ? difference - 4 : difference;
+    final targetPage = value.round() + shortestWay;
+    if (targetPage == value) return;
+    animateToPage(
+      value.round() + shortestWay,
       duration: duration,
       curve: curve,
     );
