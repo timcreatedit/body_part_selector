@@ -44,7 +44,7 @@ jobs:
 
       - name: 📊 Generate Coverage
         id: coverage-report
-        uses: whynotmake-it/dart-coverage-assistant@v1
+        uses: whynotmake-it/dart-coverage-assistant@v1.1
         with:
           generate_badges: pr
   
