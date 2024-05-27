@@ -6,6 +6,10 @@ packages:
   - packages/*
 
 command:
+  bootstrap:
+    hooks:
+      pre: |
+        dart pub global activate full_coverage
   version:
     updateGitTagRefs: true
     workspaceChangelog: false
@@ -41,6 +45,7 @@ scripts:
 
   coverage:select:
     run: |
+      dart pub global run full_coverage --ignore '*}.dart'
       flutter test --coverage
     exec:
       failFast: true
