@@ -69,5 +69,5 @@ jobs:
         run: melos run generate
 
       - name: 🔎 Check there are no uncommitted changes
-        run: git diff --exit-code
+        run: git add . && git diff --exit-code
   
