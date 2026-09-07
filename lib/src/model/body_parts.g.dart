@@ -6,7 +6,7 @@ part of 'body_parts.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BodyParts _$$_BodyPartsFromJson(Map<String, dynamic> json) => _$_BodyParts(
+_BodyParts _$BodyPartsFromJson(Map<String, dynamic> json) => _BodyParts(
       head: json['head'] as bool? ?? false,
       neck: json['neck'] as bool? ?? false,
       leftShoulder: json['leftShoulder'] as bool? ?? false,
@@ -33,7 +33,7 @@ _$_BodyParts _$$_BodyPartsFromJson(Map<String, dynamic> json) => _$_BodyParts(
       vestibular: json['vestibular'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$_BodyPartsToJson(_$_BodyParts instance) =>
+Map<String, dynamic> _$BodyPartsToJson(_BodyParts instance) =>
     <String, dynamic>{
       'head': instance.head,
       'neck': instance.neck,

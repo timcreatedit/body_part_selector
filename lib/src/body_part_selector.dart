@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:body_part_selector/src/model/body_parts.dart';
 import 'package:body_part_selector/src/model/body_side.dart';
+import 'package:body_part_selector/src/model/parsed_body.dart';
 import 'package:body_part_selector/src/service/svg_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable/touchable.dart';
 
 /// A widget that allows for selecting body parts.
@@ -74,7 +74,7 @@ class BodyPartSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = SvgService.instance.getSide(side);
-    return ValueListenableBuilder<DrawableRoot?>(
+    return ValueListenableBuilder<ParsedBody?>(
       valueListenable: notifier,
       builder: (context, value, _) {
         if (value == null) {
@@ -88,7 +88,7 @@ class BodyPartSelector extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(BuildContext context, DrawableRoot drawable) {
+  Widget _buildBody(BuildContext context, ParsedBody drawable) {
     final colorScheme = Theme.of(context).colorScheme;
     return AnimatedSwitcher(
       duration: kThemeAnimationDuration,
@@ -131,7 +131,7 @@ class _BodyPainter extends CustomPainter {
     required this.selectedOutlineColor,
   });
 
-  final DrawableRoot root;
+  final ParsedBody root;
   final BuildContext context;
   final void Function(String) onTap;
   final BodyParts bodyParts;
@@ -153,17 +153,13 @@ class _BodyPainter extends CustomPainter {
     required TouchyCanvas touchyCanvas,
     required Canvas plainCanvas,
     required Size size,
-    required Iterable<Drawable> drawables,
+    required Iterable<ParsedBodyPath> drawables,
     required Matrix4 fittingMatrix,
   }) {
     for (final element in drawables) {
       final id = element.id;
-      if (id == null) {
-        debugPrint("Found a drawable element without an ID. Skipping $element");
-        continue;
-      }
       touchyCanvas.drawPath(
-        (element as DrawableShape).path.transform(fittingMatrix.storage),
+        element.path.transform(fittingMatrix.storage),
         Paint()
           ..color = isSelected(id) ? selectedColor : unselectedColor
           ..style = PaintingStyle.fill,
@@ -182,13 +178,12 @@ class _BodyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (size != root.viewport.viewBoxRect.size) {
+    if (size != root.viewBox.size) {
       final double scale = min(
-        size.width / root.viewport.viewBoxRect.width,
-        size.height / root.viewport.viewBoxRect.height,
+        size.width / root.viewBox.width,
+        size.height / root.viewBox.height,
       );
-      final scaledHalfViewBoxSize =
-          root.viewport.viewBoxRect.size * scale / 2.0;
+      final scaledHalfViewBoxSize = root.viewBox.size * scale / 2.0;
       final halfDesiredSize = size / 2.0;
       final shift = Offset(
         halfDesiredSize.width - scaledHalfViewBoxSize.width,
@@ -201,14 +196,11 @@ class _BodyPainter extends CustomPainter {
         ..translate(shift.dx, shift.dy)
         ..scale(scale);
 
-      final drawables =
-          root.children.where((element) => element.hasDrawableContent);
-
       drawBodyParts(
         touchyCanvas: bodyPartsCanvas,
         plainCanvas: canvas,
         size: size,
-        drawables: drawables,
+        drawables: root.paths,
         fittingMatrix: fittingMatrix,
       );
     }

@@ -6,7 +6,7 @@ part 'body_parts.g.dart';
 /// A class representing the different parts of the body that can be selected,
 /// and whether they are.
 @freezed
-class BodyParts with _$BodyParts {
+abstract class BodyParts with _$BodyParts {
   /// Creates a new [BodyParts] object.
   const factory BodyParts({
     @Default(false) bool head,
